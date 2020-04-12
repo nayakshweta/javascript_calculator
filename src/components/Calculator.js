@@ -77,6 +77,9 @@ class Calculator extends React.Component {
     render() {
         return (
             <div>
+                <button id="clear">AC</button>
+                <br />
+                <br />
                 <div id="numbers">
                     {this.numbers.map(item => (
                     <Button 
