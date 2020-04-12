@@ -74,6 +74,7 @@ class Calculator extends React.Component {
 
         this.handleClear = this.handleClear.bind(this);
         this.handleNum = this.handleNum.bind(this);
+        this.handleOp = this.handleOp.bind(this);
     }
 
     handleClear() {
@@ -111,6 +112,31 @@ class Calculator extends React.Component {
         this.setState({
             input: newInput,
             lastEntryOrOutput: newLastNum
+        });
+    }
+
+    handleOp(val) {
+        var lastEntry = this.state.input.slice(-1)[0];
+        var newInput;
+        var newLastOp;
+        if(lastEntry == undefined) {
+            //if this is the first entry to the empty input array
+            newLastOp = val;
+            newInput = [...this.state.input, newLastOp];
+        }
+        else if(lastEntry.match(/^(\d*\.)?(\d+)?$/)) { 
+            // if last entry in the input array is a number ( integer or decimal ), we push a new operand to the input array
+            newLastOp = val;
+            newInput = [...this.state.input, newLastOp];
+        }
+        else if(lastEntry.match(/[+/*-]/)){ 
+            // if last entry was an operand we replace it with the new operand
+            newLastOp = val;
+            newInput = [...this.state.input.slice(0, -1), newLastOp];
+        }
+        this.setState({
+            input: newInput,
+            lastEntryOrOutput: newLastOp
         });
     }
 
