@@ -94,6 +94,9 @@ class Calculator extends React.Component {
                     ))}
                 </div>
                 <div>
+                    <button id="decimal">.</button>
+                </div>
+                <div>
                     <button id="equals">=</button>
                 </div>
             </div>
