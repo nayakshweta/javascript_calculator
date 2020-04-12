@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button';
 
 class Calculator extends React.Component {
     constructor(props) {
@@ -76,6 +77,14 @@ class Calculator extends React.Component {
     render() {
         return (
             <div>
+                <div id="numbers">
+                    {this.numbers.map(item => (
+                    <Button 
+                        id={item.id}
+                        val={item.val}
+                    />
+                    ))}
+                </div>
                 <div>
                     <button id="equals">=</button>
                 </div>
