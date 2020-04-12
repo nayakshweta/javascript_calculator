@@ -132,9 +132,24 @@ class Calculator extends React.Component {
             newInput = [...this.state.input, newLastOp];
         }
         else if(lastEntry.match(/[+/*-]/)){ 
-            // if last entry was an operand we replace it with the new operand
-            newLastOp = val;
-            newInput = [...this.state.input.slice(0, -1), newLastOp];
+            // if last entry was an operand we replace it with the new operand, except if the new operand is '-'
+            if(val == '-') {
+                newLastOp = val;
+                newInput = [...this.state.input, newLastOp];
+            }
+            if(lastEntry == '-'){
+                // however, if the last entry was already a -, we need to check if the second last entry was also an operand.
+                // If so, replace them both with the new operand.
+                var secondLastEntry = this.state.input.slice(-2, -1)[0];
+                if(secondLastEntry.match(/[+/*-]/)){
+                    newLastOp = val;
+                    newInput = [...this.state.input.slice(0, -2), newLastOp]
+                }
+            }
+            else if(val.match(/[+/*]/)){
+                newLastOp = val;
+                newInput = [...this.state.input.slice(0, -1), newLastOp];
+            }
         }
         this.setState({
             input: newInput,
@@ -203,7 +218,7 @@ class Calculator extends React.Component {
                     <Button 
                         id={item.id}
                         val={item.op}
-                        handle={this.handleNum}
+                        handle={this.handleOp}
                     />
                     ))}
                 </div>
