@@ -75,6 +75,7 @@ class Calculator extends React.Component {
         this.handleClear = this.handleClear.bind(this);
         this.handleNum = this.handleNum.bind(this);
         this.handleOp = this.handleOp.bind(this);
+        this.handleEquals = this.handleEquals.bind(this);
     }
 
     handleClear() {
@@ -140,6 +141,12 @@ class Calculator extends React.Component {
         });
     }
 
+    handleEquals() {
+        this.setState({
+            lastEntryOrOutput: eval(this.state.input.join(""))
+        });
+    }
+
     render() {
         return (
             <div>
@@ -170,7 +177,7 @@ class Calculator extends React.Component {
                     <button id="decimal">.</button>
                 </div>
                 <div>
-                    <button id="equals">=</button>
+                    <button id="equals" onClick={this.handleEquals}>=</button>
                 </div>
             </div>
         );
