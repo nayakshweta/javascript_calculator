@@ -91,7 +91,12 @@ class Calculator extends React.Component {
         var lastEntry = this.state.input.slice(-1)[0];
         var newInput;
         var newLastNum;
-        if(lastEntry == undefined) {
+        if(this.state.input.includes('=')){
+            // if equals was pressed before entering the number, start a new calculation
+            newLastNum = val;
+            newInput = [newLastNum];
+        }
+        else if(lastEntry == undefined) {
             //if this is the first entry to the empty input array
             newLastNum = val;
             newInput = [...this.state.input, newLastNum];
@@ -121,7 +126,12 @@ class Calculator extends React.Component {
         var lastEntry = this.state.input.slice(-1)[0];
         var newInput;
         var newLastOp;
-        if(lastEntry == undefined) {
+        if(this.state.input.includes('=')){
+            // if equals was pressed before clicking the operand, apply the operand to the last output.
+            newLastOp = val;
+            newInput = [this.state.lastEntryOrOutput, val];
+        }
+        else if(lastEntry == undefined) {
             //if this is the first entry to the empty input array
             newLastOp = val;
             newInput = [...this.state.input, newLastOp];
@@ -158,8 +168,11 @@ class Calculator extends React.Component {
     }
 
     handleEquals() {
+        var output = eval(this.state.input.join("")).toString();
+        var newInput = [...this.state.input, '=', output];
         this.setState({
-            lastEntryOrOutput: eval(this.state.input.join(""))
+            input: newInput,
+            lastEntryOrOutput: output
         });
     }
 
