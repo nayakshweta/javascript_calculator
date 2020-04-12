@@ -71,15 +71,23 @@ class Calculator extends React.Component {
             id: 'divide'
             }
         ];
+        
+        this.handleClear = this.handleClear.bind(this);
     }
 
+    handleClear() {
+        this.setState({
+            input: [],
+            lastEntryOrOutput: 0
+        });
+    }
 
     render() {
         return (
             <div>
                 <h3>Input: {this.state.input.join("")}</h3>
                 <h2 id="display">{this.state.lastEntryOrOutput}</h2>
-                <button id="clear">AC</button>
+                <button id="clear" onClick={this.handleClear}>AC</button>
                 <br />
                 <br />
                 <div id="numbers">
