@@ -77,6 +77,8 @@ class Calculator extends React.Component {
     render() {
         return (
             <div>
+                <h3>Input: {this.state.input.join("")}</h3>
+                <h2 id="display">{this.state.lastEntryOrOutput}</h2>
                 <button id="clear">AC</button>
                 <br />
                 <br />
