@@ -71,14 +71,46 @@ class Calculator extends React.Component {
             id: 'divide'
             }
         ];
-        
+
         this.handleClear = this.handleClear.bind(this);
+        this.handleNum = this.handleNum.bind(this);
     }
 
     handleClear() {
         this.setState({
             input: [],
             lastEntryOrOutput: 0
+        });
+    }
+
+
+    handleNum(val) {
+        var lastEntry = this.state.input.slice(-1)[0];
+        var newInput;
+        var newLastNum;
+        if(lastEntry == undefined) {
+            //if this is the first entry to the empty input array
+            newLastNum = val;
+            newInput = [...this.state.input, newLastNum];
+        }
+        else if(lastEntry == 0 && val == 0) {
+            //don't allow number to start with multiple zeroes
+            newLastNum = lastEntry;
+            newInput = this.state.input;
+        }
+        else if(lastEntry.match(/^(\d*\.)?(\d+)?$/)) { 
+            // if last entry in the input array is already a number (integer or decimal), we concat the new digit to it
+            newLastNum = this.state.input.slice(-1)[0].concat(val);
+            newInput = [...this.state.input.slice(0, -1), newLastNum];
+        }
+        else if(lastEntry.match(/[+/*-]/)){ 
+            // if last entry was an operand we push new entry to the input array
+            newLastNum = val;
+            newInput = [...this.state.input, newLastNum];
+        }
+        this.setState({
+            input: newInput,
+            lastEntryOrOutput: newLastNum
         });
     }
 
@@ -95,6 +127,7 @@ class Calculator extends React.Component {
                     <Button 
                         id={item.id}
                         val={item.val}
+                        handle={this.handleNum}
                     />
                     ))}
                 </div>
@@ -103,6 +136,7 @@ class Calculator extends React.Component {
                     <Button 
                         id={item.id}
                         val={item.op}
+                        handle={this.handleNum}
                     />
                     ))}
                 </div>
