@@ -85,6 +85,14 @@ class Calculator extends React.Component {
                     />
                     ))}
                 </div>
+                <div id="operands">
+                    {this.operands.map(item => (
+                    <Button 
+                        id={item.id}
+                        val={item.op}
+                    />
+                    ))}
+                </div>
                 <div>
                     <button id="equals">=</button>
                 </div>
