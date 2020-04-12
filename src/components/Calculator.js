@@ -76,6 +76,9 @@ class Calculator extends React.Component {
     render() {
         return (
             <div>
+                <div>
+                    <button id="equals">=</button>
+                </div>
             </div>
         );
     }
